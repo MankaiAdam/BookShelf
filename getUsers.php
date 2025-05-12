@@ -30,6 +30,9 @@ $conn->close();
             <input type="submit" class="searchbtn" value="Rechercher">
         </form>
         <div class="list-container">
+            <div class="add-btn" onclick="window.location.href='addUser.php'"> 
+                <p>+</p>
+             </div>
             <div class="header-container">
                 <!-- Displaying headers -->
                 <div class="header" style="width: 200px">Name</div>
