@@ -33,9 +33,9 @@ $conn->close();
         <div class="list-container">
             <div class="header-container">
                 <!-- Displaying headers -->
-                <div class="header" style="width: 350px">Name</div>
+                <div class="header" style="width: 200px">Name</div>
                 <div class="header" style="width: 200px">Surname</div>
-                <div class="header" style="width: 300px">Email</div>
+                <div class="header" style="width: 350px">Email</div>
                 <div class="header" style="width: 50px">Age</div>
                 <div class="header" style="width: 60px">Actions</div>
             </div>
@@ -43,9 +43,9 @@ $conn->close();
                 <ul class="list-view">
                     <?php foreach ($users as $user): ?>
                         <li data-id="<?= $user['id'] ?>" class="list-item">
-                            <div class="name" style="width: 350px"><?= htmlspecialchars($user['name']) ?></div>
+                            <div class="name" style="width: 200px"><?= htmlspecialchars($user['name']) ?></div>
                             <div class="surname" style="width: 200px"><?= htmlspecialchars($user['surname']) ?></div>
-                            <div class="email" style="width: 300px"><?= htmlspecialchars($user['email']) ?></div>
+                            <div class="email" style="width: 350px"><?= htmlspecialchars($user['email']) ?></div>
                             <div class="age" style="width: 50px"><?= htmlspecialchars($user['age']) ?></div>
                             <div class="actions" style="width: 60px">
                                 <div style="width: 30px">
@@ -86,10 +86,11 @@ $conn->close();
             const email = emailDiv.textContent.trim();
 
             // Convert divs to input fields
-            nameDiv.innerHTML = `<input type="text" style="width: 345px" value="${name}" class="edit-name">`;
+            nameDiv.innerHTML = `<input type="text" style="width: 195px" value="${name}" class="edit-name">`;
             surnameDiv.innerHTML = `<input type="text" style="width: 195px" value="${surname}" class="edit-surname">`;
-            ageDiv.innerHTML = `<input type="number" style="width: 95px" value="${age}" class="edit-age">`;
-            emailDiv.innerHTML = `<input type="text" style="width: 95px" value="${email}" class="edit-email">`;
+            emailDiv.innerHTML = `<input type="text" style="width: 345px" value="${email}" class="edit-email">`;
+            ageDiv.innerHTML = `<input type="number" style="width: 45px" value="${age}" class="edit-age">`;
+            
 
             // Update actions with Save and Cancel buttons
             actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
