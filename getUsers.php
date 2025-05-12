@@ -70,60 +70,60 @@ $conn->close();
     </div>
 
     <script>
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const li = this.closest('.list-item');
-            const actionsdiv = this.closest('.actions');
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const li = this.closest('.list-item');
+                const actionsdiv = this.closest('.actions');
 
-            const nameDiv = li.querySelector('.name');
-            const surnameDiv = li.querySelector('.surname');
-            const emailDiv = li.querySelector('.email');
-            const ageDiv = li.querySelector('.age');
+                const nameDiv = li.querySelector('.name');
+                const surnameDiv = li.querySelector('.surname');
+                const emailDiv = li.querySelector('.email');
+                const ageDiv = li.querySelector('.age');
 
-            const name = nameDiv.textContent.trim();
-            const surname = surnameDiv.textContent.trim();
-            const age = ageDiv.textContent.trim();
-            const email = emailDiv.textContent.trim();
+                const name = nameDiv.textContent.trim();
+                const surname = surnameDiv.textContent.trim();
+                const age = ageDiv.textContent.trim();
+                const email = emailDiv.textContent.trim();
 
-            // Convert divs to input fields
-            nameDiv.innerHTML = `<input type="text" style="width: 195px" value="${name}" class="edit-name">`;
-            surnameDiv.innerHTML = `<input type="text" style="width: 195px" value="${surname}" class="edit-surname">`;
-            emailDiv.innerHTML = `<input type="text" style="width: 345px" value="${email}" class="edit-email">`;
-            ageDiv.innerHTML = `<input type="number" style="width: 45px" value="${age}" class="edit-age">`;
-            
+                // Convert divs to input fields
+                nameDiv.innerHTML = `<input type="text" style="width: 195px" value="${name}" class="edit-name">`;
+                surnameDiv.innerHTML = `<input type="text" style="width: 195px" value="${surname}" class="edit-surname">`;
+                emailDiv.innerHTML = `<input type="text" style="width: 345px" value="${email}" class="edit-email">`;
+                ageDiv.innerHTML = `<input type="number" style="width: 45px" value="${age}" class="edit-age">`;
+                
 
-            // Update actions with Save and Cancel buttons
-            actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
+                // Update actions with Save and Cancel buttons
+                actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
 
-            // Save the changes when Save button is clicked
-            li.querySelector('.save-btn').addEventListener('click', function() {
-                const updatedName = li.querySelector('.edit-name').value;
-                const updatedSurname = li.querySelector('.edit-surname').value;
-                const updatedAge = li.querySelector('.edit-age').value;
-                const updatedEmail = li.querySelector('.edit-email').value;
-                const id = li.dataset.id;
+                // Save the changes when Save button is clicked
+                li.querySelector('.save-btn').addEventListener('click', function() {
+                    const updatedName = li.querySelector('.edit-name').value;
+                    const updatedSurname = li.querySelector('.edit-surname').value;
+                    const updatedAge = li.querySelector('.edit-age').value;
+                    const updatedEmail = li.querySelector('.edit-email').value;
+                    const id = li.dataset.id;
 
-                // Send the update with AJAX
-                fetch('edituser.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `id=${id}&name=${encodeURIComponent(updatedName)}&surname=${encodeURIComponent(updatedSurname)}&age=${updatedAge}&email=${encodeURIComponent(updatedEmail)}`
-                })
-                .then(response => response.text())
-                .then(data => {
-                    location.reload(); // Reload the page to reflect the changes
+                    // Send the update with AJAX
+                    fetch('edituser.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `id=${id}&name=${encodeURIComponent(updatedName)}&surname=${encodeURIComponent(updatedSurname)}&age=${updatedAge}&email=${encodeURIComponent(updatedEmail)}`
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        location.reload(); // Reload the page to reflect the changes
+                    });
+                });
+
+                // Cancel the edit and reload the page
+                li.querySelector('.cancel-btn').addEventListener('click', function() {
+                    location.reload();
                 });
             });
-
-            // Cancel the edit and reload the page
-            li.querySelector('.cancel-btn').addEventListener('click', function() {
-                location.reload();
-            });
         });
-    });
     </script>
 </body>
