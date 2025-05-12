@@ -14,5 +14,6 @@ if (isset($_POST['id'])) {
         echo "Erreur while Deleting : " . $conn->error;
     }
 }
+
 $conn->close();
 ?>

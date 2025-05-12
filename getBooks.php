@@ -29,10 +29,9 @@ $conn->close();
             <input type="submit" class="searchbtn" value="Rechercher">
         </form>
         <div class="list-container">
-
-        <div class="add-btn" >
+            <div class="add-btn" >
                 <p>+</p>
-        </div>
+            </div>
             <div class="header-container">
                 <div class="header" style="width: 350px">Title</div>
                 <div class="header" style="width: 200px">Author</div>
@@ -69,71 +68,99 @@ $conn->close();
     </div>
     
     <script>
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log("hey");
-            
-            const li = this.closest('.list-item');
-            const actionsdiv = this.closest('.actions');
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("hey");
+                
+                const li = this.closest('.list-item');
+                const actionsdiv = this.closest('.actions');
 
-            const titleDiv = li.querySelector('.title');
-            const authorDiv = li.querySelector('.author');
-            const yearDiv = li.querySelector('.year');
-            const genreDiv = li.querySelector('.genre');
+                const titleDiv = li.querySelector('.title');
+                const authorDiv = li.querySelector('.author');
+                const yearDiv = li.querySelector('.year');
+                const genreDiv = li.querySelector('.genre');
 
-            const title = titleDiv.textContent.trim();
-            const author = authorDiv.textContent.trim();
-            const year = yearDiv.textContent.trim();
-            const genre = genreDiv.textContent.trim();
+                const title = titleDiv.textContent.trim();
+                const author = authorDiv.textContent.trim();
+                const year = yearDiv.textContent.trim();
+                const genre = genreDiv.textContent.trim();
 
-            titleDiv.innerHTML = `<input type="text" style="width: 345px" value="${title}" class="edit-title">`;
-            authorDiv.innerHTML = `<input type="text" style="width: 195px" value="${author}" class="edit-author">`;
-            yearDiv.innerHTML = `<input type="number" style="width: 95px" value="${year}" class="edit-year">`;
-            genreDiv.innerHTML = `<input type="text" style="width: 95px" value="${genre}" class="edit-genre">`;
+                titleDiv.innerHTML = `<input type="text" style="width: 345px" value="${title}" class="edit-title">`;
+                authorDiv.innerHTML = `<input type="text" style="width: 195px" value="${author}" class="edit-author">`;
+                yearDiv.innerHTML = `<input type="number" style="width: 95px" value="${year}" class="edit-year">`;
+                genreDiv.innerHTML = `<input type="text" style="width: 95px" value="${genre}" class="edit-genre">`;
 
-            actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
+                actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
 
-            li.querySelector('.save-btn').addEventListener('click', function() {
-                const updatedTitle = li.querySelector('.edit-title').value;
-                const updatedAuthor = li.querySelector('.edit-author').value;
-                const updatedYear = li.querySelector('.edit-year').value;
-                const updatedGenre = li.querySelector('.edit-genre').value;
-                const id = li.dataset.id;
+                li.querySelector('.save-btn').addEventListener('click', function() {
+                    const updatedTitle = li.querySelector('.edit-title').value;
+                    const updatedAuthor = li.querySelector('.edit-author').value;
+                    const updatedYear = li.querySelector('.edit-year').value;
+                    const updatedGenre = li.querySelector('.edit-genre').value;
+                    const id = li.dataset.id;
 
-                // Send the update with AJAX
-                fetch('editbook.php', {
+                    fetch('editbook.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `id=${id}&title=${encodeURIComponent(updatedTitle)}&author=${encodeURIComponent(updatedAuthor)}&year=${updatedYear}&genre=${encodeURIComponent(updatedGenre)}`
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        location.reload();
+                    });
+                });
+
+                li.querySelector('.cancel-btn').addEventListener('click', function() {
+                    location.reload();
+                });
+            });
+        });
+
+        document.querySelector('.add-btn').addEventListener('click', function() {
+            const listView = document.querySelector('.list-view');
+
+            if (document.querySelector('.list-item.new-book')) return;
+
+            const newLi = document.createElement('li');
+            newLi.classList.add('list-item', 'new-book');
+
+            newLi.innerHTML = `
+                <div class="title" style="width: 350px"><input type="text" class="new-title" style="width: 345px" placeholder="Title"></div>
+                <div class="author" style="width: 200px"><input type="text" class="new-author" style="width: 195px" placeholder="Author"></div>
+                <div class="year" style="width: 100px"><input type="number" class="new-year" style="width: 95px" placeholder="Year"></div>
+                <div class="genre" style="width: 100px"><input type="text" class="new-genre" style="width: 95px" placeholder="Genre"></div>
+                <div class="actions" style="width: 60px">
+                    <button class="save-new-btn" style="width: 30px">S</button>
+                    <button class="cancel-new-btn" style="width: 30px">C</button>
+                </div>
+            `;
+            listView.prepend(newLi);
+
+            newLi.querySelector('.save-new-btn').addEventListener('click', function () {
+                const title = newLi.querySelector('.new-title').value;
+                const author = newLi.querySelector('.new-author').value;
+                const year = newLi.querySelector('.new-year').value;
+                const genre = newLi.querySelector('.new-genre').value;
+
+                fetch('addBook.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: `id=${id}&title=${encodeURIComponent(updatedTitle)}&author=${encodeURIComponent(updatedAuthor)}&year=${updatedYear}&genre=${encodeURIComponent(updatedGenre)}`
+                    body: `title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&year=${encodeURIComponent(year)}&genre=${encodeURIComponent(genre)}`
                 })
                 .then(response => response.text())
                 .then(data => {
-                    // Reload the page or just update the fields
                     location.reload();
                 });
             });
 
-            li.querySelector('.cancel-btn').addEventListener('click', function() {
-                location.reload();
+            newLi.querySelector('.cancel-new-btn').addEventListener('click', function () {
+                newLi.remove();
             });
         });
-    });
-
-    document.querySelector('.add-btn').addEventListener('click', function() {
-        window.location.href = 'addBook.php';
-            
-
-
-
-
-    });
-
-
-
-
-
     </script>
 </body>

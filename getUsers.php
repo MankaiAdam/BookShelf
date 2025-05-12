@@ -30,9 +30,9 @@ $conn->close();
             <input type="submit" class="searchbtn" value="Rechercher">
         </form>
         <div class="list-container">
-            <div class="add-btn" onclick="window.location.href='addUser.php'"> 
+            <div class="add-btn" >
                 <p>+</p>
-             </div>
+            </div>
             <div class="header-container">
                 <!-- Displaying headers -->
                 <div class="header" style="width: 200px">Name</div>
@@ -87,17 +87,14 @@ $conn->close();
                 const age = ageDiv.textContent.trim();
                 const email = emailDiv.textContent.trim();
 
-                // Convert divs to input fields
                 nameDiv.innerHTML = `<input type="text" style="width: 195px" value="${name}" class="edit-name">`;
                 surnameDiv.innerHTML = `<input type="text" style="width: 195px" value="${surname}" class="edit-surname">`;
                 emailDiv.innerHTML = `<input type="text" style="width: 345px" value="${email}" class="edit-email">`;
                 ageDiv.innerHTML = `<input type="number" style="width: 45px" value="${age}" class="edit-age">`;
                 
 
-                // Update actions with Save and Cancel buttons
                 actionsdiv.innerHTML = `<button class="save-btn" style="width: 30px">S</button><button class="cancel-btn" style="width: 30px">C</button>`;
 
-                // Save the changes when Save button is clicked
                 li.querySelector('.save-btn').addEventListener('click', function() {
                     const updatedName = li.querySelector('.edit-name').value;
                     const updatedSurname = li.querySelector('.edit-surname').value;
@@ -105,7 +102,6 @@ $conn->close();
                     const updatedEmail = li.querySelector('.edit-email').value;
                     const id = li.dataset.id;
 
-                    // Send the update with AJAX
                     fetch('edituser.php', {
                         method: 'POST',
                         headers: {
@@ -115,14 +111,56 @@ $conn->close();
                     })
                     .then(response => response.text())
                     .then(data => {
-                        location.reload(); // Reload the page to reflect the changes
+                        location.reload();
                     });
                 });
 
-                // Cancel the edit and reload the page
                 li.querySelector('.cancel-btn').addEventListener('click', function() {
                     location.reload();
                 });
+            });
+        });
+        document.querySelector('.add-btn').addEventListener('click', function() {
+            const listView = document.querySelector('.list-view');
+
+            if (document.querySelector('.list-item.new-user')) return;
+
+            const newLi = document.createElement('li');
+            newLi.classList.add('list-item', 'new-user');
+
+            newLi.innerHTML = `
+                <div class="name" style="width: 200px"><input type="text" class="new-name" style="width: 195px" placeholder="Name"></div>
+                <div class="surname" style="width: 200px"><input type="text" class="new-surname" style="width: 195px" placeholder="Surname"></div>
+                <div class="email" style="width: 350px"><input type="text" class="new-email" style="width: 345px" placeholder="Email"></div>
+                <div class="age" style="width: 50px"><input type="number" class="new-age" style="width: 45px" placeholder="Age"></div>
+                <div class="actions" style="width: 60px">
+                    <button class="save-new-btn" style="width: 30px">S</button>
+                    <button class="cancel-new-btn" style="width: 30px">C</button>
+                </div>
+            `;
+            listView.prepend(newLi);
+
+            newLi.querySelector('.save-new-btn').addEventListener('click', function () {
+                const name = newLi.querySelector('.new-name').value;
+                const surname = newLi.querySelector('.new-surname').value;
+                const email = newLi.querySelector('.new-email').value;
+                const age = newLi.querySelector('.new-age').value;
+
+                fetch('addUser.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `name=${encodeURIComponent(name)}&surname=${encodeURIComponent(surname)}&email=${encodeURIComponent(email)}&age=${encodeURIComponent(age)}`
+                })
+                .then(response => response.text())
+                .then(data => {
+                    location.reload();
+                });
+            });
+
+            newLi.querySelector('.cancel-new-btn').addEventListener('click', function () {
+                newLi.remove();
             });
         });
     </script>
