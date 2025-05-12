@@ -31,6 +31,10 @@ $conn->close();
             <input type="submit" class="searchbtn" value="Rechercher">
         </form>
         <div class="list-container">
+
+        <div class="add-btn"  onclick="window.location.href='addBook.php'">
+                <p>+</p>
+        </div>
             <div class="header-container">
                 <div class="header" style="width: 350px">Title</div>
                 <div class="header" style="width: 200px">Author</div>
