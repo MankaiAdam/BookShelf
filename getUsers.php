@@ -34,15 +34,14 @@ $conn->close();
                 <p>+</p>
             </div>
             <div class="header-container">
-                <!-- Displaying headers -->
                 <div class="header" style="width: 200px">Name</div>
                 <div class="header" style="width: 200px">Surname</div>
                 <div class="header" style="width: 350px">Email</div>
                 <div class="header" style="width: 50px">Age</div>
                 <div class="header" style="width: 60px">Actions</div>
             </div>
-            <?php if (!empty($users)): ?>
-                <ul class="list-view">
+            <ul class="list-view">
+                <?php if (!empty($users)): ?>
                     <?php foreach ($users as $user): ?>
                         <li data-id="<?= $user['id'] ?>" class="list-item">
                             <div class="name" style="width: 200px"><?= htmlspecialchars($user['name']) ?></div>
@@ -62,10 +61,10 @@ $conn->close();
                             </div>
                         </li>   
                     <?php endforeach; ?>
-                </ul>
-            <?php elseif (isset($_GET['search'])): ?>
-                <p>No User was found.</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <p>No User was found.</p>
+                <?php endif; ?>
+            </ul>
         </div>
     </div>
 

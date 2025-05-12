@@ -39,8 +39,8 @@ $conn->close();
                 <div class="header" style="width: 100px">Genre</div>
                 <div class="header" style="width: 60px">Actions</div>
             </div>
-            <?php if (!empty($books)): ?>
-                <ul class="list-view">
+            <ul class="list-view">
+                <?php if (!empty($books)): ?>
                     <?php foreach ($books as $book): ?>
                         <li data-id="<?= $book['id'] ?>" class="list-item">
                             <div class= "title" style="width: 350px"> <?= htmlspecialchars($book['title']) ?> </div>
@@ -60,10 +60,10 @@ $conn->close();
                             </div>
                         </li>   
                     <?php endforeach; ?>
-                </ul>
-            <?php elseif (isset($_GET['search'])): ?>
-                <p>No book was found.</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <p>No book was found.</p>
+                <?php endif; ?>
+            </ul>
         </div>
     </div>
     
