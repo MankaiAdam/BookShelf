@@ -32,7 +32,7 @@ $conn->close();
         </form>
         <div class="list-container">
 
-        <div class="add-btn"  onclick="window.location.href='addBook.php'">
+        <div class="add-btn" >
                 <p>+</p>
         </div>
             <div class="header-container">
@@ -123,5 +123,19 @@ $conn->close();
             });
         });
     });
+
+    document.querySelector('.add-btn').addEventListener('click', function() {
+        window.location.href = 'addBook.php';
+            
+
+
+
+
+    });
+
+
+
+
+
     </script>
 </body>
