@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css?v=1.0">
     <title>Bookshelf</title>
 </head>
 <body>
-    <div class="navbar">
+    <div class="view-container">
         <h1>Bookshelf</h1>
-        <ul>
-            <li><a href="./getBooks.php">Books</a></li>
-            <li><a href="./getUsers.php">Users</a></li>
-        </ul>
+        <div class="button-container">
+            <button class="home-button" onclick="location.href='./getBooks.php'">Books</button>
+            <button class="home-button" onclick="location.href='./getUsers.php'">Users</button>
+        </div>
     </div>
 </body>
 </html>
